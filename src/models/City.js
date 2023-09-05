@@ -1,4 +1,4 @@
-const {Schema,model} = require('mongoose')
+const {Schema,model,Types} = require('mongoose')
 
 const schemaCity = new Schema({
     name:{
@@ -11,8 +11,24 @@ const schemaCity = new Schema({
     },
     img:{
         type:String,
-        required:false
-    }
+        required:true
+    },
+    currency:{
+        type:String,
+        required:true
+    },
+    country:{
+        type:String,
+        required:true
+    },
+    language:{
+        type:String,
+        required:true
+    },
+    itineraries: [{
+        type: Types.ObjectId,
+        ref: "Tinerary"
+    }]
 })
 
 const City = model("City",schemaCity)
