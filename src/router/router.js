@@ -10,12 +10,6 @@ router.get("/city/:id",getCity)
 router.post("/cities",verifyDataCity, addCity)
 router.delete("/cities", deleteCity)
 router.post("/itineraries", addTinerary)
-
-
-//router.get('/city/:id', cityController.getCityById);
-
-
-// Define la ruta para actualizar las imágenes de las ciudades
 router.post('/actualizar-imagenes-ciudades', updateCityImages);
 
 
