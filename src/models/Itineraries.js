@@ -12,17 +12,28 @@ const schemaTinerary = new Schema({
     },
     duration:{
         type:String,
-        required:false
+        required:true
     },
     price:{
         type:String,
-        required:false
+        required:true
     },
     tags:{
         type:String,
         required:false
-    }
-    ,
+    },
+    likes:{
+        type:String,
+        required:false
+    },
+    imgUser:{
+        type:String,
+        required:false
+    },
+    nameUser:{
+        type:String,
+        required:true
+    },
     _city:{
         type: Types.ObjectId, ref:"City" ,
         required:false

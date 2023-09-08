@@ -1,16 +1,28 @@
 const express = require('express') ;
 const router = express.Router();
 const{getCity,getCities,addCity,deleteCity,updateCityImages} = require('../controllers/citiesController')
-const{addTinerary} = require('../controllers/tineraryController')
+const{addTinerary, getTineraries, deleteItineraryById, modifyTinerary, getTineraryById,getTineraryByCity} = require('../controllers/tineraryController')
 const {verifyDataCity} = require ('../middlewares/verifications')
 
-
+//Cities
 router.get("/cities", getCities)
 router.get("/city/:id",getCity)
 router.post("/cities",verifyDataCity, addCity)
 router.delete("/cities", deleteCity)
-router.post("/itineraries", addTinerary)
 router.post('/actualizar-imagenes-ciudades', updateCityImages);
 
+//Itineraries
+//Show city with tinerary
+router.get("/city/itineraries/:id",getTineraryByCity)
+//Add
+router.post("/itineraries", addTinerary)
+//Show
+router.get('/itineraries', getTineraries);
+//Delete by id
+router.delete("/itineraries", deleteItineraryById)
+//show by id
+router.get('/itineraries/:id', getTineraryById)
+//modify
+router.put('/itineraries/:id', modifyTinerary)
 
 module.exports = router
