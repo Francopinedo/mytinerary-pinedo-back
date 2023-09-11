@@ -13,7 +13,7 @@ router.post('/actualizar-imagenes-ciudades', updateCityImages);
 
 //Itineraries
 //Show city with tinerary
-router.get("/city/itineraries/:id",getTineraryByCity)
+router.get('/city/itinerary/:id', getTineraryByCity);
 //Add
 router.post("/itineraries", addTinerary)
 //Show

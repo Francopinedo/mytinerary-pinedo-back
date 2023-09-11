@@ -32,7 +32,7 @@ const schemaTinerary = new Schema({
     },
     nameUser:{
         type:String,
-        required:true
+        required:false
     },
     _city:{
         type: Types.ObjectId, ref:"City" ,
