@@ -28,6 +28,6 @@ const schemaUser = new Schema({
 
 })
 
-const User = model("User",schemaCity)
+const User = model("User",schemaUser)
 
 module.exports = User;
