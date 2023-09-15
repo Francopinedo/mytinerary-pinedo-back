@@ -1,5 +1,7 @@
-const { verifyPassword } = require("../middlewares/auth")
+const { verifyPassword ,verify_data_user} = require("../middlewares/auth")
 const User= require("../models/User")
+
+
 
 const register = async(req,res) =>{
 try {
@@ -22,28 +24,27 @@ try {
 }
 
 const login = async (req, res) => {
-    try {
-      const { email, password } = req.body;
-      const userFounded = await User.findOne({ email });
-      if (userFounded) {
-        
-        if (isValidPassword(password,userFounded.password)) {
-          const token = generateToken(req, res);
-          res.status(200).json({
-            message: "Logged!",
-            token: token,
-            user: userFounded
-          });
-        } else {
-          res.status(403).json({ message: "Wrong password" });
+  try {
+    const { email, password } = req.body;
+
+    
+    verify_data_user(req, res, async () => {
+     
+      const userFounded = req.user; //user  en req.user
+
+      res.status(200).json({
+        message: "Logged!",
+        token: req.token, 
+        user: {
+          email: req.user.email,
+          id: req.user._id
         }
-      } else {
-        res.status(403).json({ message: "User not found" });
-      }
-    } catch (e) {
-      res.status(400).json({ message: e.message });
-    }
-  };
+      });
+    });
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+};
 const authenticated = async(req,res) =>{
     try {
         res.status(200).json({
@@ -82,4 +83,4 @@ const sign_out = async(req,res) =>{
 
 
 
-module.exports = {register,login,authenticated,sign_out}
+module.exports = {register,login,authenticated,sign_out,}
