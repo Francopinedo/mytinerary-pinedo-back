@@ -7,7 +7,7 @@ const { hashPassword, verifyPassword, generateToken,verifyUserExist,passportVeri
 
 
 authRouter.post("/register",hashPassword, register)
-authRouter.post("/login",verifyAuthData,verifyUserExist,verifyPassword,generateToken, login)
+authRouter.post("/login",verifyUserExist,verifyPassword,generateToken, login)
 //authRouter.post("/authenticated",passportVerify.authenticated("jwt",{session:false}),generateToken,authenticated)
 
 module.exports = authRouter
