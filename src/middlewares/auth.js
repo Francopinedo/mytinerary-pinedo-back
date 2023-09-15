@@ -35,8 +35,8 @@ const hashPassword = (req,res,next) =>{
     }
 }
 
-const verifyPassword = async (req, res, next) => {
-    const { email, password } = req.body;
+const verifyPassword = async (passwordPlain, hashPassword) => {
+   
   
     try {
       const user = await User.findOne({ email });
@@ -45,27 +45,20 @@ const verifyPassword = async (req, res, next) => {
         return res.status(404).json({ message: 'User not found' });
       }
   
-      const isValid = await bcrypt.compare(password, user.password);
-  
-      if (isValid) {
+      const isValid = await bcrypt.compare(passwordPlain, hashPassword);
+  return   isValid
       
-        next();
-      } else {
-        // Si la contraseña no coincide, responde con un error
-        res.status(400).json({ message: 'Wrong password' });
-      }
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  };
+  };}
 
 const verifyUserExist = async(req,res,next) =>{
     const {password,email} = req.body;
     const userFounded = await User.findOne({email:email})
 
    if (userFounded){
-    req.User = userFounded; 
+    req.user = userFounded; 
+    res.status(200).json({ message: 'USER FOUNDED '+userFounded });
     next()
    }else{
     res.status(400).json({message:"user not founded"})
@@ -78,6 +71,7 @@ const generateToken = (req, res, next) => {
       let secretkey = "claveSuperSecreta";
       let token = jwt.sign({ email: req.body.email }, secretkey, { expiresIn: 60 * 3 });
       req.token = token; 
+      res.status(200).json({ message: 'TOKEN  '+token });
       next();
     } catch (error) {
       return res.status(500).json({ error: error });

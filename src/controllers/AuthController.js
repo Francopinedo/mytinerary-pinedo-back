@@ -21,32 +21,29 @@ try {
 }
 }
 
-const login = async(req,res) =>{
+const login = async (req, res) => {
     try {
-        res.status(200).json({
-            message:"Logged!",
-        token:req.token,
-        user:req.user})
-        const {password,email} = req.body
-        const userFounded = User.findOne({email:payload.email})
-    
-        if (userFounded){
-           if (verifyPassword(password,userFounded.password)) {
-            return    res.status(403).json({message: "User logged"})
-           }else{
-            return   res.status(403).json({message: "Wrong password"})
-           }
-        }    
-else{
-    return res.status(403).json({message: "User not founded"})
- 
-}             
-    } catch (e) {
-        res.status(400).json({message: e.message})
+      const { email, password } = req.body;
+      const userFounded = await User.findOne({ email });
+      if (userFounded) {
         
+        if (isValidPassword(password,userFounded.password)) {
+          const token = generateToken(req, res);
+          res.status(200).json({
+            message: "Logged!",
+            token: token,
+            user: userFounded
+          });
+        } else {
+          res.status(403).json({ message: "Wrong password" });
+        }
+      } else {
+        res.status(403).json({ message: "User not found" });
+      }
+    } catch (e) {
+      res.status(400).json({ message: e.message });
     }
-    }
-
+  };
 const authenticated = async(req,res) =>{
     try {
         res.status(200).json({
@@ -71,5 +68,18 @@ else{
         res.status(400).json({message: e.message})
     }
 } 
-     
-module.exports = {register,login,authenticated}
+   
+const sign_out = async(req,res) =>{
+    try {
+        res.status(200).json({
+            message:"Logged OUT!",
+        token:req.token
+} )            
+    } catch (e) {
+        res.status(500).json({message: e.message})
+    }
+} 
+
+
+
+module.exports = {register,login,authenticated,sign_out}
