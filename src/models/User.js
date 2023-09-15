@@ -5,7 +5,7 @@ const schemaUser = new Schema({
         type:String,
         required:true
     },
-    lastname:{
+    lastName:{
         type:String,
         required:true,
     },
