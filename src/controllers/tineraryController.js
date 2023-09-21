@@ -48,11 +48,11 @@ const getTineraryByCity = async (req, res) => {
       let {id}= req.query
       let cityfounded = await City.findById(id)  
       let newTinerary =  await Tinerary.create({
-           name:"Walking",
-          info: "Walking",
+           name:"Wine Tasting",
+          info: "Wine Tasting",
           duration: "3h",
-          price:"$50",
-          tags:"Walk",
+          price:"$45",
+          tags:"Wine Tasting",
           _city:cityfounded
         })
   
